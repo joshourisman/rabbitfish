@@ -5,10 +5,7 @@ pages:
     - !Page
       name: index
       template: index.html
-    - !Page
-      name: test
+    - !DynamicPage
+      name: dynamic-test
       template: index.html
-    - !Page
-      name: deep-test
-      template: index.html
-      url: deep/test.html
+      url: '{date.year}/{date.month}/{date.day}/{slug}.html'
