@@ -18,17 +18,20 @@ class Page(yaml.YAMLObject):
         state['directory'] = os.path.dirname(state['output'])
         self.__dict__.update(state)
 
-    def render(self):
+    def render_to_string(self):
         print("Rendering page {0} with {1}.".format(self.name, self.template))
         template = env.get_template(self.template)
         content = yaml.load(open("content/{}.yaml".format(self.name)))
         return template.render(**content)
+
+    def render_to_output(self):
+        if not os.path.exists(self.directory):
+            os.makedirs(self.directory)
+        open(self.output, 'w').write(self.render_to_string())
 
 config = yaml.load(open("config.yaml", 'r'))
 pages = config['pages']
 if os.path.exists('output'):
     shutil.rmtree('output')
 for page in pages:
-    if not os.path.exists(page.directory):
-        os.makedirs(page.directory)
-    open(page.output, 'w').write(page.render())
+    page.render_to_output()
