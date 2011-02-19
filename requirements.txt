@@ -1,2 +1,4 @@
+# pip doesn't support Python 3 yet, so these have to be manually installed with easy_install
+
 jinja2
 pyyaml
