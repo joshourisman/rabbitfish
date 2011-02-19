@@ -13,7 +13,8 @@ class Page(yaml.YAMLObject):
 
 config = yaml.load(open("config.yaml", 'r'))
 pages = config['pages']
-shutil.rmtree('output')
+if os.path.exists('output'):
+    shutil.rmtree('output')
 for page in pages:
     name = page.name
     template = page.template
