@@ -53,7 +53,7 @@ class DynamicPage(Page):
             output = "output/{}".format(url)
             directory = os.path.dirname(output)
             if not os.path.exists(directory):
-                os.mkdirs(directory)
+                os.makedirs(directory)
             open(output, 'w').write(pages[slug])
     
 config = yaml.load(open("config.yaml", 'r'))
