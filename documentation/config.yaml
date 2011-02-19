@@ -1,2 +1,14 @@
 name: RabbitFish Documentation
 description: Documentation for the RabbitFish static site generator.
+
+pages:
+    - !Page
+      name: index
+      template: index.html
+    - !Page
+      name: test
+      template: index.html
+    - !Page
+      name: deep-test
+      template: index.html
+      url: deep/test.html
