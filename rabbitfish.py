@@ -29,6 +29,32 @@ class Page(yaml.YAMLObject):
             os.makedirs(self.directory)
         open(self.output, 'w').write(self.render_to_string())
 
+class DynamicPage(Page):
+    yaml_tag = '!DynamicPage'
+
+    def __setstate__(self, state):
+        if 'url' not in state:
+            state['url'] = "{}.html"
+        self.__dict__.update(state)
+
+    def render_to_string(self):
+        print("Rendering dynamic page {0} with {1}".format(
+                self.name, self.template))
+        template = env.get_template(self.template)
+        content_list = yaml.load_all(open("content/{}.yaml".format(self.name)))
+        return {content['slug']:template.render(**content) for
+                content in content_list}
+        
+    def render_to_output(self):
+        pages = self.render_to_string()
+        for slug in pages:
+            url = self.url.format(slug=slug)
+            output = "output/{}".format(url)
+            directory = os.path.dirname(output)
+            if not os.path.exists(directory):
+                os.mkdirs(directory)
+            open(output, 'w').write(pages[slug])
+    
 config = yaml.load(open("config.yaml", 'r'))
 pages = config['pages']
 if os.path.exists('output'):
