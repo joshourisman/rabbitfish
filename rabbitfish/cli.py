@@ -5,7 +5,7 @@ import yaml
 
 from pages import Page, DynamicPage
 
-if __name__ == "__main__":
+def main():
     print("One dead, unjugged rabbitfish later...")
 
     config = yaml.load(open("config.yaml", 'r'))
@@ -14,3 +14,6 @@ if __name__ == "__main__":
         shutil.rmtree('output')
     for page in pages:
         page.render_to_output()
+
+if __name__ == "__main__":
+    main()
