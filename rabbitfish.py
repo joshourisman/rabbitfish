@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from jinja2 import Environment, FileSystemLoader
 import os
+import shutil
 import yaml
 
 print("One dead, unjugged rabbitfish later...")
@@ -12,6 +13,7 @@ class Page(yaml.YAMLObject):
 
 config = yaml.load(open("config.yaml", 'r'))
 pages = config['pages']
+shutil.rmtree('output')
 for page in pages:
     name = page.name
     template = page.template
