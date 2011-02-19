@@ -3,12 +3,26 @@ from jinja2 import Environment, FileSystemLoader
 import os
 import yaml
 
+print("One dead, unjugged rabbitfish later...")
+
 env = Environment(loader=FileSystemLoader('templates'))
 
-print("One dead, unjugged rabbitfish later...")
-config = yaml.load(open("config.yaml", 'r'))
+class Page(yaml.YAMLObject):
+    yaml_tag = '!Page'
 
-index = env.get_template('index.html')
-if not os.path.exists("output"):
-    os.makedirs("output")
-open("output/index.html", 'w').write(index.render(**config))
+config = yaml.load(open("config.yaml", 'r'))
+pages = config['pages']
+for page in pages:
+    name = page.name
+    template = page.template
+    url = getattr(page, 'url', '{}.html'.format(name))
+    output = "output/{}".format(url)
+    print("Rendering page {0} to {1}.".format(name, output))
+
+    directory = os.path.dirname(output)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    template = env.get_template(template)
+    content = yaml.load(open("content/{}.yaml".format(name)))
+    open(output, 'w').write(template.render(**content))
+
