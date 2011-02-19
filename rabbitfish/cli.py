@@ -1,19 +1,41 @@
 #!/usr/bin/env python
-import os
-import shutil
-import yaml
+import sys
 
-from pages import Page, DynamicPage
+from optparse import OptionParser
+
+from jug import generatesite
+
+VERSION = "0.1a"
 
 def main():
-    print("One dead, unjugged rabbitfish later...")
+    print("One dead, unjugged rabbitfish later...", file=sys.stderr)
+    usage = "usage: %prog ACTION"
+    version = "%prog {}".format(VERSION)
 
-    config = yaml.load(open("config.yaml", 'r'))
-    pages = config['pages']
-    if os.path.exists('output'):
-        shutil.rmtree('output')
-    for page in pages:
-        page.render_to_output()
+    parser = OptionParser(prog='rabbitfish',
+                          usage=usage,
+                          version=version)
 
+    options, args = parser.parse_args()
+
+    ACTIONS = {
+        'generatesite': generatesite,
+        }
+
+    try:
+        action = args[0]
+    except IndexError:
+        parser.print_usage()
+        return
+
+    if action not in ACTIONS:
+        parser.print_usage()
+        print('{} is not a supported action.'.format(action), file=sys.stderr)
+        print('Supported actions include: {}'.format(' ,'.join(ACTIONS)),
+              file=sys.stderr)
+        return
+
+    ACTIONS[action]()
+    
 if __name__ == "__main__":
     main()
