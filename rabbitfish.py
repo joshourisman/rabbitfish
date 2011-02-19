@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from jinja2 import Environment, FileSystemLoader
+import datetime
 import os
 import shutil
 import yaml
@@ -48,7 +49,7 @@ class DynamicPage(Page):
     def render_to_output(self):
         pages = self.render_to_string()
         for slug in pages:
-            url = self.url.format(slug=slug)
+            url = self.url.format(slug=slug, date=datetime.date.today())
             output = "output/{}".format(url)
             directory = os.path.dirname(output)
             if not os.path.exists(directory):
