@@ -5,10 +5,6 @@ import os
 import shutil
 import yaml
 
-print("One dead, unjugged rabbitfish later...")
-
-env = Environment(loader=FileSystemLoader('templates'))
-
 class Page(yaml.YAMLObject):
     yaml_tag = '!Page'
 
@@ -55,10 +51,14 @@ class DynamicPage(Page):
             if not os.path.exists(directory):
                 os.makedirs(directory)
             open(output, 'w').write(pages[slug])
-    
-config = yaml.load(open("config.yaml", 'r'))
-pages = config['pages']
-if os.path.exists('output'):
-    shutil.rmtree('output')
-for page in pages:
-    page.render_to_output()
+
+if __name__ == "__main__":
+    print("One dead, unjugged rabbitfish later...")
+
+    env = Environment(loader=FileSystemLoader('templates'))
+    config = yaml.load(open("config.yaml", 'r'))
+    pages = config['pages']
+    if os.path.exists('output'):
+        shutil.rmtree('output')
+    for page in pages:
+        page.render_to_output()
