@@ -29,9 +29,11 @@
   <code>Dynamic Page</code> it is necessary to specify a <code>url</code>
   attribute in your config.yaml file. That URL must also contain a
   placeholder for which the <code>Dynamic Page</code>'s slug will be
-  substituded. A Python <code>datetime</code> object containing the current
-  date and time is also made available to your URL. This is handled using
-  Python 3's string formatting, so the <code>url</code> for your
+  substituded. If your page definition includes a <code>date</code> attribute
+  it will also made available to your URL. For this to work properly, the
+  <code>date</code> attribute must be specified as a timestamp like so:
+  <code>date: !!timestampe 2010-02-19</code>. This is handled using Python
+  3's string formatting, so the <code>url</code> for your
   <code>Dynamic Page</code> should look something
   like this:
   <code>url: 'blog/{date.year}/{date.month}/{date.day}/{slug}.html'</code>.
