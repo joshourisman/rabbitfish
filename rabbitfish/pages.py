@@ -46,7 +46,7 @@ class DynamicPage(Page):
     def render_to_output(self):
         pages = self.render_to_string()
         for slug in pages:
-            url = self.url.format(slug=slug, date=datetime.date.today())
+            url = self.url.format(slug=slug, date=datetime.datetime.now())
             output = "output/{}".format(url)
             directory = os.path.dirname(output)
             if not os.path.exists(directory):
