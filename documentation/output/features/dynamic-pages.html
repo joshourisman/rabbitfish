@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Pages</title>
+  </head>
+  <body>
+    <h1>RabbitFish</h1>
+    <h2>a static site generator</h2>
+    <h3>Dynamic Pages</h3>
+<p>
+  <code>Dynamic Pages</code> operate nearly identically to regular pages,
+  however they allow you to create multiple <code>Pages</code> with a single
+  entry in your config.yaml. This is excellent for create <code>Pages</code>
+  such as blog entries. This features section of the documentation is also
+  created using a <code>Dynamic Page</code>. To do this,
+  <code>Dynamic Pages</code> require a small amount of extra configuration
+  in both your YAML content file and your config.yaml file.
+</p>
+<p>
+  To create a <code>Dynamic Page</code> your YAML content file will be a
+  little different. The single YAML file will contain multiple YAML documents
+  each of which <em>must</em> specify a <code>slug</code> attribute. A
+  shortened version of the YAML file that is used to generate this page looks
+  like this:
+  <script src="https://gist.github.com/835549.js?file=pages.yaml"></script>
+</p>
+<p>
+  Unlike a regular <code>Page</code>, when creating a
+  <code>Dynamic Page</code> it is necessary to specify a <code>url</code>
+  attribute in your config.yaml file. That URL must also contain a
+  placeholder for which the <code>Dynamic Page</code>'s slug will be
+  substituded. A Python <code>datetime</code> object containing the current
+  date and time is also made available to your URL. This is handled using
+  Python 3's string formatting, so the <code>url</code> for your
+  <code>Dynamic Page</code> should look something
+  like this:
+  <code>url: 'blog/{date.year}/{date.month}/{date.day}/{slug}.html'</code>.
+  The config.yaml file that was used to generate this documentation, for
+  example, looks like this:
+  <script src="https://gist.github.com/835549.js?file=config.yaml"></script>
+</p>
+
+  </body>
+</html>

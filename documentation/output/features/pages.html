@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pages</title>
+  </head>
+  <body>
+    <h1>RabbitFish</h1>
+    <h2>a static site generator</h2>
+    <h3>Pages</h3>
+<p>
+  <code>Pages</code> are simple HTML pages that RabbitFish generates using
+  your Jinja2 templates and YAML configuration files. Three things are
+  required to define a <code>Page</code>:
+  <ol>
+    <li>
+      An entry to the <code>pages</code> list in your main config.yaml file.
+    </li>
+    <li>A YAML file containing the content for the Page.</li>
+    <li>A Jinja2 template to create the HTML for the Page.</li>
+  </ol>
+</p>
+<p>
+  In your config.yaml file, the <code>pages</code> list specifies the pages
+  that RabbitFish will generate for your site. Each entry specifies the
+  name, template, and (optionally) url that will be used for the Page. If no
+  url is specified, it will simply append '.html' to the page name and
+  place it at the root level of your site. The name will be used to
+  reference that <code>Page</code> from now on. The config.yaml file for
+  this documentation looks like this:
+  <script src="https://gist.github.com/835549.js?file=config.yaml"></script>
+</p>
+<p>
+  As with the configuration, the content for your pages is also stored in
+  YAML files. The contents of the YAML content file for your <code>Page</code> will be
+  passed in as the template context, so your template can access your
+  content by using the names of the YAML attributes you created as Jinja2
+  variables. So if you defined <code>title: Pages</code> in your YAML
+  configuration file, you will be able to insert that data into your
+  template as <code>{{ title }}</code>.
+</p>
+<p>
+  Your templates are ordinary Jinja2 templates and can use all the normal
+  features available in Jinja2.
+</p>
+
+  </body>
+</html>
