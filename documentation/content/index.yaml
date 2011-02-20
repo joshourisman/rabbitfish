@@ -28,7 +28,7 @@ content: |
       <ol>
         <li>
           A URL lookup feature for use in templates similar to Django's
-	  {% url %} or Flask's url_for().
+          {% url %} or Flask's url_for().
         </li>
         <li>Static file handling.</li>
         <li>
