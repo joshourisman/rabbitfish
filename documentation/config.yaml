@@ -4,8 +4,8 @@ description: Documentation for the RabbitFish static site generator.
 pages:
     - !Page
       name: index
-      template: index.html
+      template: main.html
     - !DynamicPage
-      name: dynamic-test
-      template: index.html
-      url: '{date.year}/{date.month}/{date.day}/{slug}.html'
+      name: features
+      template: main.html
+      url: 'features/{slug}.html'

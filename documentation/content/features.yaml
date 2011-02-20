@@ -1,0 +1,78 @@
+---
+title: Pages
+slug: pages
+content: |
+    <h3>Pages</h3>
+    <p>
+      <code>Pages</code> are simple HTML pages that RabbitFish generates using
+      your Jinja2 templates and YAML configuration files. Three things are
+      required to define a <code>Page</code>:
+      <ol>
+        <li>
+          An entry to the <code>pages</code> list in your main config.yaml file.
+        </li>
+        <li>A YAML file containing the content for the Page.</li>
+        <li>A Jinja2 template to create the HTML for the Page.</li>
+      </ol>
+    </p>
+    <p>
+      In your config.yaml file, the <code>pages</code> list specifies the pages
+      that RabbitFish will generate for your site. Each entry specifies the
+      name, template, and (optionally) url that will be used for the Page. If no
+      url is specified, it will simply append '.html' to the page name and
+      place it at the root level of your site. The name will be used to
+      reference that <code>Page</code> from now on. The config.yaml file for
+      this documentation looks like this:
+      <script src="https://gist.github.com/835549.js?file=config.yaml"></script>
+    </p>
+    <p>
+      As with the configuration, the content for your pages is also stored in
+      YAML files. The contents of the YAML content file for your <code>Page</code> will be
+      passed in as the template context, so your template can access your
+      content by using the names of the YAML attributes you created as Jinja2
+      variables. So if you defined <code>title: Pages</code> in your YAML
+      configuration file, you will be able to insert that data into your
+      template as <code>{{ title }}</code>.
+    </p>
+    <p>
+      Your templates are ordinary Jinja2 templates and can use all the normal
+      features available in Jinja2.
+    </p>
+---
+title: Dynamic Pages
+slug: dynamic-pages
+content: |
+    <h3>Dynamic Pages</h3>
+    <p>
+      <code>Dynamic Pages</code> operate nearly identically to regular pages,
+      however they allow you to create multiple <code>Pages</code> with a single
+      entry in your config.yaml. This is excellent for create <code>Pages</code>
+      such as blog entries. This features section of the documentation is also
+      created using a <code>Dynamic Page</code>. To do this,
+      <code>Dynamic Pages</code> require a small amount of extra configuration
+      in both your YAML content file and your config.yaml file.
+    </p>
+    <p>
+      To create a <code>Dynamic Page</code> your YAML content file will be a
+      little different. The single YAML file will contain multiple YAML documents
+      each of which <em>must</em> specify a <code>slug</code> attribute. A
+      shortened version of the YAML file that is used to generate this page looks
+      like this:
+      <script src="https://gist.github.com/835549.js?file=pages.yaml"></script>
+    </p>
+    <p>
+      Unlike a regular <code>Page</code>, when creating a
+      <code>Dynamic Page</code> it is necessary to specify a <code>url</code>
+      attribute in your config.yaml file. That URL must also contain a
+      placeholder for which the <code>Dynamic Page</code>'s slug will be
+      substituded. A Python <code>datetime</code> object containing the current
+      date and time is also made available to your URL. This is handled using
+      Python 3's string formatting, so the <code>url</code> for your
+      <code>Dynamic Page</code> should look something
+      like this:
+      <code>url: 'blog/{date.year}/{date.month}/{date.day}/{slug}.html'</code>.
+      The config.yaml file that was used to generate this documentation, for
+      example, looks like this:
+      <script src="https://gist.github.com/835549.js?file=config.yaml"></script>
+    </p>
+...
