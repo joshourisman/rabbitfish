@@ -44,12 +44,20 @@ class DynamicPage(Page):
                 content in content_list}
         
     def render_to_output(self):
-        pages = self.render_to_string()
-        for slug in pages:
-            url = self.url.format(slug=slug, date=datetime.datetime.now())
+        print("Rendering dynamic page {0} with {1}".format(
+                self.name, self.template))
+        template = env.get_template(self.template)
+        content_list = yaml.load_all(open("content/{}.yaml".format(self.name)))
+        for content in content_list:
+            html = template.render(**content)
+            url_context = {
+                'slug': content['slug'],
+                'date': datetime.datetime.now(),
+            }
+            url = self.url.format(**url_context)
             output = "output/{}".format(url)
             directory = os.path.dirname(output)
             if not os.path.exists(directory):
                 os.makedirs(directory)
-            open(output, 'w').write(pages[slug])
+            open(output, 'w').write(html)
 
