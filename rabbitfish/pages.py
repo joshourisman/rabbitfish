@@ -52,8 +52,9 @@ class DynamicPage(Page):
             html = template.render(**content)
             url_context = {
                 'slug': content['slug'],
-                'date': datetime.datetime.now(),
             }
+            if 'date' in content and type(content['date']) is datetime.date:
+                url_context['date'] = content['date']
             url = self.url.format(**url_context)
             output = "output/{}".format(url)
             directory = os.path.dirname(output)
