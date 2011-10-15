@@ -6,6 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 
 env = Environment(loader=FileSystemLoader('templates'))
 
+
 class Page(yaml.YAMLObject):
     yaml_tag = '!Page'
 
@@ -27,6 +28,7 @@ class Page(yaml.YAMLObject):
             os.makedirs(self.directory)
         open(self.output, 'w').write(self.render_to_string())
 
+
 class DynamicPage(Page):
     yaml_tag = '!DynamicPage'
 
@@ -40,9 +42,9 @@ class DynamicPage(Page):
                 self.name, self.template))
         template = env.get_template(self.template)
         content_list = yaml.load_all(open("content/{}.yaml".format(self.name)))
-        return {content['slug']:template.render(**content) for
+        return {content['slug']: template.render(**content) for
                 content in content_list}
-        
+
     def render_to_output(self):
         print("Rendering dynamic page {0} with {1}".format(
                 self.name, self.template))
@@ -62,4 +64,3 @@ class DynamicPage(Page):
             if not os.path.exists(directory):
                 os.makedirs(directory)
             open(output, 'w').write(html)
-

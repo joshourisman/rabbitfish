@@ -7,6 +7,7 @@ from jug import generatesite
 
 VERSION = "0.1a"
 
+
 def main():
     print("One dead, unjugged rabbitfish later...", file=sys.stderr)
     usage = "usage: %prog ACTION"
@@ -36,6 +37,6 @@ def main():
         return
 
     ACTIONS[action]()
-    
+
 if __name__ == "__main__":
     main()
