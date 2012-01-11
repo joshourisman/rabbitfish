@@ -9,3 +9,7 @@ pages:
       name: features
       template: main.html
       url: 'features/{slug}.html'
+    - !IndexPage
+      name: index
+      template: index.html
+      to_index: features
