@@ -64,3 +64,15 @@ class DynamicPage(Page):
             if not os.path.exists(directory):
                 os.makedirs(directory)
             open(output, 'w').write(html)
+
+
+class IndexPage(Page):
+    yaml_tag = '!IndexPage'
+
+    def render_to_string(self):
+        print("Rendering index page {0} with {1}".format(
+                self.name, self.tempalte))
+        template = env.get_template(self.template)
+        content = yaml.load_all(open("content/{}.yaml".format(self.to_index)))
+        html = template.render(**content)
+
