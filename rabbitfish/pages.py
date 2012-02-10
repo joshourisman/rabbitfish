@@ -56,7 +56,7 @@ class DynamicPage(Page):
             url_context = {
                 'slug': content['slug'],
             }
-            if 'date' in content and type(content['date']) is datetime.date:
+            if 'date' in content and type(content['date']) in [datetime.date, datetime.datetime]:
                 url_context['date'] = content['date']
             url = self.url.format(**url_context)
             output = "output/{}".format(url)
