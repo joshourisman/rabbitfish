@@ -26,7 +26,10 @@ class Site(object):
             shutil.rmtree('output')
 
         for page in self.pages:
-            page.render_to_output()
+            if type(page) is ListPage:
+                page.render_to_output(self.dynamic_pages)
+            else:
+                page.render_to_output()
 
 
 def generatesite():
