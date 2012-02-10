@@ -66,11 +66,11 @@ class DynamicPage(Page):
             open(output, 'w').write(html)
 
 
-class IndexPage(Page):
-    yaml_tag = '!IndexPage'
+class ListPage(Page):
+    yaml_tag = '!ListPage'
 
     def render_to_string(self):
-        print("Rendering index page {0} with {1}".format(
+        print("Rendering list page {0} with {1}".format(
                 self.name, self.template))
         template = env.get_template(self.template)
         content_list = yaml.load_all(
