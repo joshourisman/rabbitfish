@@ -70,6 +70,17 @@ class DynamicPage(Page):
 class ListPage(Page):
     yaml_tag = '!ListPage'
 
+    def get_page_url(self, page):
+        page_type = self.dynamic_pages[self.to_index]
+        url_format = page_type.url
+        url_context = {'slug': page['slug']}
+        if 'date' in page and type(page['date']) in \
+            [datetime.date, datetime.datetime]:
+            url_context['date'] = page['date']
+
+        url = url_format.format(**url_context)
+        return url
+
     def render_to_string(self):
         print("Rendering list page {0} with {1}".format(
                 self.name, self.template))
