@@ -71,7 +71,7 @@ class IndexPage(Page):
 
     def render_to_string(self):
         print("Rendering index page {0} with {1}".format(
-                self.name, self.tempalte))
+                self.name, self.template))
         template = env.get_template(self.template)
         content_list = yaml.load_all(
             open("content/{}.yaml".format(self.to_index)))
