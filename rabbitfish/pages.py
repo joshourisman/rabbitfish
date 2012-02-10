@@ -73,6 +73,10 @@ class IndexPage(Page):
         print("Rendering index page {0} with {1}".format(
                 self.name, self.tempalte))
         template = env.get_template(self.template)
-        content = yaml.load_all(open("content/{}.yaml".format(self.to_index)))
-        html = template.render(**content)
+        content_list = yaml.load_all(
+            open("content/{}.yaml".format(self.to_index)))
 
+        index = []
+        for i in range(self.num_to_index):
+            index.append(content_list.__next__())
+        return template.render({'object_list': index})
