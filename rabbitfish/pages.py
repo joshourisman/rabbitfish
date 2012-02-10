@@ -24,7 +24,7 @@ class Page(yaml.YAMLObject):
         print("Rendering page {0} with {1}.".format(self.name, self.template))
         template = env.get_template(self.template)
         content = yaml.load(open("content/{}.yaml".format(self.name)))
-        return template.render(**content)
+        return template.render(self.get_context(object=content))
 
     def render_to_output(self):
         if not os.path.exists(self.directory):
@@ -48,7 +48,7 @@ class DynamicPage(Page):
 
         pages = []
         for content in content_list:
-            html = template.render({'object': content})
+            html = template.render(self.get_context(object=content))
             url_context = {
                 'slug': content['slug'],
             }
@@ -100,7 +100,7 @@ class ListPage(Page):
             page = content_list.__next__()
             page['url'] = self.get_page_url(page)
             index.append(page)
-        return template.render({'object_list': index})
+        return template.render(self.get_context(object_list=index))
 
     def render_to_output(self, dynamic_pages):
         self.dynamic_pages = dynamic_pages
