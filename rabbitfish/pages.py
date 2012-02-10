@@ -17,6 +17,9 @@ class Page(yaml.YAMLObject):
         state['directory'] = os.path.dirname(state['output'])
         self.__dict__.update(state)
 
+    def get_context(self, **kwargs):
+        return kwargs
+
     def render_to_string(self):
         print("Rendering page {0} with {1}.".format(self.name, self.template))
         template = env.get_template(self.template)
