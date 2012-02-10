@@ -30,9 +30,5 @@ class Site(object):
 
 
 def generatesite():
-    config = yaml.load(open("config.yaml", 'r'))
-    pages = config['pages']
-    if os.path.exists('output'):
-        shutil.rmtree('output')
-    for page in pages:
-        page.render_to_output()
+    site = Site("config.yaml")
+    site.generate()
