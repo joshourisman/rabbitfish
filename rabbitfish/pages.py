@@ -87,6 +87,9 @@ class DynamicPage(Page):
         for page in pages:
             url = page[0]
             html = page[1]
+
+            if url.endswith('/'):
+                url = url + 'index.html'
             output = "output/{}".format(url)
             directory = os.path.dirname(output)
             if not os.path.exists(directory):
