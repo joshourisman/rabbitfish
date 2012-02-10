@@ -92,3 +92,7 @@ class ListPage(Page):
         for i in range(self.num_to_index):
             index.append(content_list.__next__())
         return template.render({'object_list': index})
+
+    def render_to_output(self, dynamic_pages):
+        self.dynamic_pages = dynamic_pages
+        super(ListPage, self).render_to_output()
