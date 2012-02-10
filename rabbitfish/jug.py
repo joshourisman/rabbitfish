@@ -2,7 +2,7 @@ import os
 import shutil
 import yaml
 
-from pages import Page, DynamicPage
+from pages import Page, DynamicPage, IndexPage
 
 
 def generatesite():
