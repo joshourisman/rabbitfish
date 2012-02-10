@@ -18,7 +18,10 @@ class Page(yaml.YAMLObject):
         self.__dict__.update(state)
 
     def get_context(self, **kwargs):
-        return kwargs
+        context = kwargs
+        context['now'] = datetime.datetime.now()
+
+        return context
 
     def render_to_string(self):
         print("Rendering page {0} with {1}.".format(self.name, self.template))
