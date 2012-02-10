@@ -6,6 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 
 env = Environment(loader=FileSystemLoader('templates'))
 
+
 def date(value, format="%X"):
     return value.strftime(format)
 env.filters['date'] = date
@@ -48,7 +49,7 @@ class DynamicPage(Page):
         self.__dict__.update(state)
 
     def get_context(self, **kwargs):
-        context = kwargs
+        context = super(DynamicPage, self).get_context(**kwargs)
         if 'tags' in context['object']:
             raw_tags = context['object']['tags']
             if ',' in raw_tags:
