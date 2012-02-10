@@ -77,6 +77,14 @@ class DynamicPage(Page):
 class ListPage(Page):
     yaml_tag = '!ListPage'
 
+    def __setstate__(self, state):
+        super(ListPage, self).__setstate__(state)
+        if 'num_to_index' not in state:
+            state['index_all'] = True
+        else:
+            state['index_all'] = False
+        self.__dict__.update(state)
+
     def get_page_url(self, page):
         page_type = self.dynamic_pages[self.to_index]
         url_format = page_type.url
@@ -96,10 +104,17 @@ class ListPage(Page):
             open("content/{}.yaml".format(self.to_index)))
 
         index = []
-        for i in range(self.num_to_index):
-            page = content_list.__next__()
+        count = 0
+        for page in content_list:
+            if not self.index_all and count >= self.num_to_index:
+                continue
+            else:
+                count += 1
+
             page['url'] = self.get_page_url(page)
             index.append(page)
+        print(" - Rendered ListPage {} with {} {}".format(
+            self.name, count, self.to_index))
         return template.render(self.get_context(object_list=index))
 
     def render_to_output(self, dynamic_pages):
