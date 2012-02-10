@@ -90,7 +90,9 @@ class ListPage(Page):
 
         index = []
         for i in range(self.num_to_index):
-            index.append(content_list.__next__())
+            page = content_list.__next__()
+            page['url'] = self.get_page_url(page)
+            index.append(page)
         return template.render({'object_list': index})
 
     def render_to_output(self, dynamic_pages):
