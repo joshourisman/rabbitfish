@@ -42,7 +42,7 @@ class DynamicPage(Page):
                 self.name, self.template))
         template = env.get_template(self.template)
         content_list = yaml.load_all(open("content/{}.yaml".format(self.name)))
-        return {content['slug']: template.render(**content) for
+        return {content['slug']: template.render({'object': content}) for
                 content in content_list}
 
     def render_to_output(self):
@@ -52,7 +52,7 @@ class DynamicPage(Page):
         content_list = yaml.load_all(open("content/{}.yaml".format(self.name)))
         for content in content_list:
             print(" - Rendering {}".format(content['slug']))
-            html = template.render(**content)
+            html = template.render({'object': content})
             url_context = {
                 'slug': content['slug'],
             }
