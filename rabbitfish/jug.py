@@ -2,6 +2,8 @@ import os
 import shutil
 import yaml
 
+from pages import Page, DynamicPage
+
 
 def generatesite():
     config = yaml.load(open("config.yaml", 'r'))
