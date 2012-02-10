@@ -6,6 +6,10 @@ from jinja2 import Environment, FileSystemLoader
 
 env = Environment(loader=FileSystemLoader('templates'))
 
+def date(value, format="%X"):
+    return value.strftime(format)
+env.filters['date'] = date
+
 
 class Page(yaml.YAMLObject):
     yaml_tag = '!Page'
