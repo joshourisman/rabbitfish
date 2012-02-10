@@ -47,6 +47,18 @@ class DynamicPage(Page):
             state['url'] = "{}.html"
         self.__dict__.update(state)
 
+    def get_context(self, **kwargs):
+        context = kwargs
+        if 'tags' in context['object']:
+            raw_tags = context['object']['tags']
+            if ',' in raw_tags:
+                split_tags = raw_tags.split(',')
+            else:
+                split_tags = raw_tags.split(' ')
+            context['tags'] = split_tags
+
+        return context
+
     def render_to_string(self):
         print("Rendering dynamic page {0} with {1}".format(
                 self.name, self.template))
