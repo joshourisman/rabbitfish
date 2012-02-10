@@ -42,16 +42,9 @@ class DynamicPage(Page):
                 self.name, self.template))
         template = env.get_template(self.template)
         content_list = yaml.load_all(open("content/{}.yaml".format(self.name)))
-        return {content['slug']: template.render({'object': content}) for
-                content in content_list}
 
-    def render_to_output(self):
-        print("Rendering dynamic page {0} with {1}".format(
-                self.name, self.template))
-        template = env.get_template(self.template)
-        content_list = yaml.load_all(open("content/{}.yaml".format(self.name)))
+        pages = []
         for content in content_list:
-            print(" - Rendering {}".format(content['slug']))
             html = template.render({'object': content})
             url_context = {
                 'slug': content['slug'],
@@ -60,6 +53,17 @@ class DynamicPage(Page):
                 [datetime.date, datetime.datetime]:
                 url_context['date'] = content['date']
             url = self.url.format(**url_context)
+            pages.append((url, html))
+
+        return pages
+
+    def render_to_output(self):
+        pages = self.render_to_string()
+        print(" - Rendered {} instances of DynamicPage {}".format(
+            len(pages), self.name))
+        for page in pages:
+            url = page[0]
+            html = page[1]
             output = "output/{}".format(url)
             directory = os.path.dirname(output)
             if not os.path.exists(directory):
