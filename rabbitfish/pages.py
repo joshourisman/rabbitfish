@@ -25,6 +25,8 @@ class Page(yaml.YAMLObject):
     def get_context(self, **kwargs):
         context = kwargs
         context['now'] = datetime.datetime.now()
+        if 'url' not in context:
+            context['url'] = self.url
 
         return context
 
@@ -68,7 +70,6 @@ class DynamicPage(Page):
 
         pages = []
         for content in content_list:
-            html = template.render(self.get_context(object=content))
             url_context = {
                 'slug': content['slug'],
             }
@@ -76,6 +77,9 @@ class DynamicPage(Page):
                 [datetime.date, datetime.datetime]:
                 url_context['date'] = content['date']
             url = self.url.format(**url_context)
+            html = template.render(self.get_context(
+                object=content,
+                url=url))
             pages.append((url, html))
 
         return pages
