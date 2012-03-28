@@ -1,5 +1,3 @@
-import os
-import shutil
 import yaml
 
 from pages import Page, DynamicPage, ListPage
@@ -22,9 +20,6 @@ class Site(object):
                 self.dynamic_pages[page.name] = page
 
     def generate(self):
-        if os.path.exists('output'):
-            shutil.rmtree('output')
-
         for page in self.pages:
             if type(page) is ListPage:
                 page.render_to_output(self.dynamic_pages)
